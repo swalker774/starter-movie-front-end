@@ -1,13 +1,10 @@
+const {
+  NODE_ENV = "development",
+  DEVELOPMENT_API_URL,
+  PRODUCTION_API_URL,
+} = process.env;
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
-
-// const {
-//   NODE_ENV = "development",
-//   DEVELOPMENT_API_URL,
-//   PRODUCTION_API_URL,
-// } = process.env;
-// const API_BASE_URL =
-//   NODE_ENV === "production" ? PRODUCTION_API_URL : DEVELOPMENT_API_URL;
+  NODE_ENV === "production" ? PRODUCTION_API_URL : DEVELOPMENT_API_URL;
 
 /**
  * Defines the default headers for these functions to work with `json-server`
