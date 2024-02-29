@@ -1,10 +1,14 @@
 const {
   NODE_ENV = "development",
-  DEVELOPMENT_API_URL,
+  REACT_APP_DEVELOPMENT_API_URL,
   PRODUCTION_API_URL,
 } = process.env;
+console.log("dev", REACT_APP_DEVELOPMENT_API_URL);
 const API_BASE_URL =
-  NODE_ENV === "production" ? PRODUCTION_API_URL : DEVELOPMENT_API_URL;
+  NODE_ENV === "production"
+    ? PRODUCTION_API_URL
+    : REACT_APP_DEVELOPMENT_API_URL;
+console.log(process.env);
 
 /**
  * Defines the default headers for these functions to work with `json-server`
@@ -28,18 +32,21 @@ headers.append("Content-Type", "application/json");
  *  If the response is not in the 200 - 399 range the promise is rejected.
  */
 async function fetchJson(url, options, onCancel) {
+  console.log("this");
   try {
+    console.log("try");
     const response = await fetch(url, options);
 
     if (response.status === 204) {
       return null;
     }
-
+    console.log(response);
     const payload = await response.json();
-
+    console.log(payload.data);
     if (payload.error) {
       return Promise.reject({ message: payload.error });
     }
+
     return payload.data;
   } catch (error) {
     if (error.name !== "AbortError") {
@@ -72,8 +79,10 @@ function populateTheaters(signal) {
  *  a promise that resolves to a possibly empty array of movies saved in the database.
  */
 export async function listMovies(signal) {
+  console.log(API_BASE_URL);
   const url = new URL(`${API_BASE_URL}/movies?is_showing=true`);
   const addReviews = populateReviews(signal);
+
   return await fetchJson(url, { headers, signal }, []).then((movies) =>
     Promise.all(movies.map(addReviews))
   );
@@ -85,6 +94,7 @@ export async function listMovies(signal) {
  *  a promise that resolves to a possibly empty array of theaters saved in the database.
  */
 export async function listTheaters(signal) {
+  console.log("theater", API_BASE_URL);
   const url = new URL(`${API_BASE_URL}/theaters`);
   return await fetchJson(url, { headers, signal }, []);
 }
