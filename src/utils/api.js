@@ -1,12 +1,6 @@
-const {
-  NODE_ENV = "development",
-  REACT_APP_DEVELOPMENT_API_URL,
-  REACT_APP_PRODUCTION_API_URL,
-} = process.env;
+const { REACT_APP_DEVELOPMENT_API_URL } = process.env;
 const API_BASE_URL =
-  NODE_ENV === "production"
-    ? REACT_APP_PRODUCTION_API_URL
-    : REACT_APP_DEVELOPMENT_API_URL;
+  REACT_APP_DEVELOPMENT_API_URL || "https://welovemoviesback-mdek.onrender.com";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
