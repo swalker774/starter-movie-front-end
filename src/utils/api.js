@@ -1,11 +1,11 @@
 const {
   NODE_ENV = "development",
   REACT_APP_DEVELOPMENT_API_URL,
-  PRODUCTION_API_URL,
+  REACT_APP_PRODUCTION_API_URL,
 } = process.env;
 const API_BASE_URL =
   NODE_ENV === "production"
-    ? PRODUCTION_API_URL
+    ? REACT_APP_PRODUCTION_API_URL
     : REACT_APP_DEVELOPMENT_API_URL;
 
 /**
